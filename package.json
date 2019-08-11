@@ -1,0 +1,74 @@
+{
+  "name": "nestjs-lib-starter",
+  "version": "0.0.1",
+  "description": "NestJS library starter",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public",
+    "prepublish:next": "npm run build",
+    "publish:next": "npm publish --access public --tag next"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test && npm run lint",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "engines": {
+    "node": ">= 10.15.1"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.0.0",
+    "@nestjs/core": "^6.0.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0",
+    "typeorm": "^0.2.7"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "6.1.1",
+    "@types/express": "4.16.1",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.4",
+    "@types/supertest": "2.0.7",
+    "jest": "24.7.1",
+    "prettier": "1.17.0",
+    "supertest": "4.0.2",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.1.0",
+    "tsc-watch": "2.2.1",
+    "tsconfig-paths": "3.8.0",
+    "tslint": "5.16.0",
+    "husky": "3.0.2",
+    "typescript": "3.4.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "test",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
