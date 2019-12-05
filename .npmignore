@@ -1,8 +1,10 @@
 # source
 lib
 tests
-index.ts
+test.module.ts
 package-lock.json
 tslint.json
 tsconfig.json
 .prettierrc
+test/
+.idea/
