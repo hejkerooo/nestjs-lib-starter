@@ -15,3 +15,6 @@ npm-debug.log
 
 # dist
 dist
+
+# package lock
+package-lock.json
