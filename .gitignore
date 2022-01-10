@@ -18,3 +18,4 @@ dist
 
 # package lock
 package-lock.json
+coverage

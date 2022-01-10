@@ -1,0 +1,38 @@
+name: Run tests
+on:
+  pull_request:
+    branches-ignore:
+      - alpha
+jobs:
+  tests:
+    strategy:
+      matrix:
+        NODE_VERSION: [12.x, 14.x, 16.x]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          CACHE_NAME: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ matrix.NODE_VERSION }}-
+            ${{ runner.os }}-build-${{ matrix.NODE_VERSION }}-
+            ${{ runner.os }}-${{ matrix.NODE_VERSION }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Jest coverage report
+        uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-script: npm run test:cov
+
